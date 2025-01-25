@@ -1,0 +1,25 @@
+.container {
+  width: 600px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.text {
+  font-size: 20px;
+  margin-bottom: 10px;
+  left: 0;
+}
+
+.input {
+  width: 560px;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 20px;
+}
+
+.input:focus {
+  outline: blue 1px solid;
+}
