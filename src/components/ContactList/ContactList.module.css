@@ -1,6 +1,14 @@
-.itemList {
-  list-style: none;
+.containerList {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
+  list-style: none;
+}
+
+.itemList {
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  width: 300px;
 }

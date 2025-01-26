@@ -1,19 +1,9 @@
 .container {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  justify-content: space-evenly;
   gap: 20px;
   list-style: none;
-}
-
-.item {
-  border: 2px solid black;
-  border-radius: 5px;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  width: 300px;
 }
 
 .itemInfo {
