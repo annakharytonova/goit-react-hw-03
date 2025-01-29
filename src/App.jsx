@@ -15,17 +15,10 @@ function App() {
 
   const [contacts, setContacts] = useState(() => {
     const savedContacts = localStorage.getItem("contacts");
-    if (savedContacts) {
-      return JSON.parse(savedContacts);
-    } else {
-      localStorage.setItem("contacts", JSON.stringify(defaultContacts));
-      return defaultContacts;
-    }
+    return savedContacts ? JSON.parse(savedContacts) : defaultContacts;
   });
 
   const [search, setSearch] = useState("");
-  const [newName, setNewName] = useState("");
-  const [newNumber, setNewNumber] = useState("");
 
   useEffect(() => {
     localStorage.setItem("contacts", JSON.stringify(contacts));
@@ -36,61 +29,36 @@ function App() {
   );
 
   const addContact = async (values) => {
-    try {
-      const newContact = {
-        id: nanoid(),
-        name: values.name,
-        number: values.number,
-      };
-      setContacts((contacts) => [...contacts, newContact]);
-      await localStorage.setItem("contacts", JSON.stringify(contacts));
-      console.log("newName:", values.name);
-      console.log("newNumber:", values.number);
-      const isCopy =
-        values.name &&
-        newNumber &&
-        contacts.some(
-          (contact) =>
-            contact.name.toLowerCase().trim() ===
-              values.name.toLowerCase().trim() &&
-            contact.number === values.number
-        );
-      if (isCopy) {
-        alert(`Контакт вже існує!`);
-        return;
-      }
-
-      setNewName("");
-      setNewNumber("");
-    } catch (error) {
-      console.error(error);
+    const isCopy =
+      values.name &&
+      values.number &&
+      contacts.some(
+        (contact) =>
+          contact.name.toLowerCase().trim() ===
+            values.name.toLowerCase().trim() && contact.number === values.number
+      );
+    if (isCopy) {
+      alert(`Контакт вже існує!`);
+      return;
     }
+
+    const newContact = {
+      id: nanoid(),
+      name: values.name,
+      number: values.number,
+    };
+    setContacts((contacts) => [...contacts, newContact]);
   };
 
   const handleDeleteContact = (id) => {
     setContacts((prev) => prev.filter((contact) => contact.id !== id));
   };
 
-  const handleSubmit = async (values) => {
-    try {
-      setNewName(values.name);
-      setNewNumber(values.number);
-      await addContact();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <>
       <div>
         <h1>Phonebook</h1>
-        <ContactForm
-          initialValues={{ name: newName, number: newNumber }}
-          onChange={{ setNewName, setNewNumber }}
-          onSubmit={addContact}
-          handleSubmit={handleSubmit}
-        />
+        <ContactForm onSubmit={addContact} />
         <SearchBox value={search} onSearch={setSearch} />
         <ContactList contacts={searchContacts} onDelete={handleDeleteContact} />
       </div>

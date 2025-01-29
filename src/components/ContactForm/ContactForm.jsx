@@ -24,23 +24,32 @@ const ContactForm = ({ onSubmit }) => {
     <div>
       <Formik
         initialValues={initialValues}
-        onSubmit={onSubmit}
         validationSchema={schema}
+        onSubmit={(values, { resetForm }) => {
+          onSubmit(values);
+          resetForm();
+        }}
       >
-        <Form className={s.form}>
-          <label>
-            Name <Field className={s.input} name="name" placeholder="Name" />
-          </label>
-          <ErrorMessage className={s.error} component="p" name="name" />
-          <label>
-            Number{" "}
-            <Field className={s.input} name="number" placeholder="000-00-00" />
-          </label>
-          <ErrorMessage className={s.error} component="p" name="number" />
-          <button className={s.button} type="submit">
-            Add contact
-          </button>
-        </Form>
+        {() => (
+          <Form className={s.form}>
+            <label>
+              Name <Field className={s.input} name="name" placeholder="Name" />
+            </label>
+            <ErrorMessage className={s.error} component="p" name="name" />
+            <label>
+              Number{" "}
+              <Field
+                className={s.input}
+                name="number"
+                placeholder="000-00-00"
+              />
+            </label>
+            <ErrorMessage className={s.error} component="p" name="number" />
+            <button className={s.button} type="submit">
+              Add contact
+            </button>
+          </Form>
+        )}
       </Formik>
     </div>
   );
